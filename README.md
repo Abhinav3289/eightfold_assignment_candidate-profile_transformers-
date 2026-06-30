@@ -1,72 +1,63 @@
 # Multi-Source Candidate Data Transformer
 
-Production-ready pipeline for the **Eightfold Engineering Intern (Jul–Dec 2026)** assignment. Ingests structured and unstructured candidate sources, merges them into a canonical profile with provenance and confidence, then projects to a runtime-configurable output schema.
+**Abhinav Patel · IIIT Bhopal · Eightfold Engineering Intern (Jul–Dec 2026)**
 
-## Submission
+A production-ready pipeline that ingests structured and unstructured candidate sources, merges them into a canonical profile with **provenance** and **confidence**, and projects to a **runtime-configurable** output schema.
 
-| Resource | Link |
+---
+
+## Submission Links
+
+| Deliverable | Link |
 | --- | --- |
 | **Live Demo (Web UI)** | https://abhinav3289-eightfold-assignment-candidate-profil-webapp-nghud3.streamlit.app/ |
 | **GitHub Repository** | https://github.com/Abhinav3289/eightfold_assignment_candidate-profile_transformers- |
-| **Design Document** | [`docs/DESIGN.md`](docs/DESIGN.md) · **Full PDF source:** [`docs/Abhinav_Patel_Eightfold_Submission.md`](docs/Abhinav_Patel_Eightfold_Submission.md) |
-| **Demo Video Script** | Page 2 of [`docs/Abhinav_Patel_Eightfold_Submission.md`](docs/Abhinav_Patel_Eightfold_Submission.md) · Export guide: [`docs/PDF_EXPORT.md`](docs/PDF_EXPORT.md) |
-| **Submission Guide** | [`docs/SUBMISSION.md`](docs/SUBMISSION.md) |
-| **Sample Outputs** | [`output/default_profile.json`](output/default_profile.json), [`output/custom_profile.json`](output/custom_profile.json) |
-| **Demo Video** | _Add your link in README and `docs/SUBMISSION.md`_ |
+| **Design Document (PDF)** | [`docs/Abhinav_Patel_Eightfold_Design_Only.pdf`](docs/Abhinav_Patel_Eightfold_Design_Only.pdf) |
+| **Design + Demo Script (PDF)** | [`docs/Abhinav_Patel_Eightfold.pdf`](docs/Abhinav_Patel_Eightfold.pdf) |
+| **Sample Output (default)** | [`output/default_profile.json`](output/default_profile.json) |
+| **Sample Output (custom)** | [`output/custom_profile.json`](output/custom_profile.json) |
+| **Demo Video** | _[Add your YouTube/Loom link here]_ |
 
-### Quick verify (for reviewers)
+> Rename the design PDF to `Abhinav_Patel_<YourEmail>_Eightfold.pdf` before email submission.
 
-```bash
-pip install -e ".[dev]"
-pytest -q
-streamlit run web/app.py   # or use live demo URL above
-```
+---
 
-## Tech Stack
+## What This Project Does
 
-| Layer | Choice | Why |
-| --- | --- | --- |
-| Language | **Python 3.11+** | Strong data/ETL ecosystem, fast to iterate |
-| CLI | **Typer** | Typed, production-friendly CLI |
-| Schemas | **Pydantic v2** | Canonical + config validation |
-| Phones | **phonenumbers** | Reliable E.164 normalization |
-| Dates | **python-dateutil** | Robust date parsing |
-| Resume | **pypdf**, **python-docx** | PDF/DOCX text extraction |
-| GitHub | **requests** | Optional live API (sample JSON fallback) |
-| Tests | **pytest** | Unit + end-to-end coverage |
+| Capability | Details |
+| --- | --- |
+| **Structured sources** | Recruiter CSV, ATS JSON |
+| **Unstructured sources** | GitHub profile, resume (TXT/PDF/DOCX), recruiter notes |
+| **Normalization** | E.164 phones, YYYY-MM dates, canonical skills, ISO-3166 countries |
+| **Merge policy** | Structured beats unstructured; higher confidence wins; never invent data |
+| **Configurable output** | Runtime JSON config — field select, rename, normalize, `on_missing` |
+| **Interfaces** | CLI · REST API (FastAPI) · Web UI (Streamlit) |
 
-## Architecture (Service Folders)
+**Sample candidate:** Abhinav Patel — B.Tech CSE, IIIT Bhopal (2026), intern at TechNova Solutions, Bhopal IN.
 
-```
-src/candidate_transformer/
-├── cli/           # CLI entrypoint
-├── ingest/        # CSV, ATS JSON, GitHub, resume, notes
-├── extract/       # Path resolution for projection
-├── normalize/     # Phone, date, skill, location normalizers
-├── merge/         # Conflict resolution + deduplication
-├── confidence/    # Overall confidence scoring
-├── project/       # Configurable output projection layer
-├── validate/      # Schema validation
-├── api/           # FastAPI REST layer
-├── models/        # Canonical + config Pydantic models
-└── pipeline/      # Orchestrator (detect → validate)
-```
+**Pipeline:** `detect → ingest → normalize → merge → confidence → project → validate`
 
-**Pipeline flow:** detect → ingest → normalize → merge → confidence → project → validate
+---
 
-## Quick Start
+## Quick Start (Local)
 
 ```bash
-cd eightfold-candidate-transformer
+git clone https://github.com/Abhinav3289/eightfold_assignment_candidate-profile_transformers-.git
+cd eightfold_assignment_candidate-profile_transformers-
+
 python -m venv .venv
 
 # Windows
 .venv\Scripts\activate
 
+# macOS / Linux
+# source .venv/bin/activate
+
 pip install -e ".[dev]"
+pytest -q
 ```
 
-### Default canonical output
+### CLI — default canonical output
 
 ```bash
 python -m candidate_transformer \
@@ -78,7 +69,7 @@ python -m candidate_transformer \
   -o output/default_profile.json
 ```
 
-### Custom projection config
+### CLI — custom projection config
 
 ```bash
 python -m candidate_transformer \
@@ -91,27 +82,68 @@ python -m candidate_transformer \
   -o output/custom_profile.json
 ```
 
-## Source Types Implemented
+### Web UI
 
-| Type | Source | Folder |
-| --- | --- | --- |
-| Structured | Recruiter CSV | `ingest/csv_ingestor.py` |
-| Structured | ATS JSON blob | `ingest/json_ingestor.py` |
-| Unstructured | GitHub profile (JSON file or live URL) | `ingest/github_ingestor.py` |
-| Unstructured | Resume (TXT/PDF/DOCX) | `ingest/resume_ingestor.py` |
-| Unstructured | Recruiter notes (.txt) | `ingest/notes_ingestor.py` |
+```bash
+pip install -r requirements-web.txt
+streamlit run web/app.py
+```
+
+Open **http://localhost:8501** — or use the [live demo](https://abhinav3289-eightfold-assignment-candidate-profil-webapp-nghud3.streamlit.app/) (no install required).
+
+**Input modes:** Use sample data · Upload files · Manual entry form
+
+### REST API
+
+```bash
+pip install -r requirements-api.txt
+uvicorn candidate_transformer.api.main:app --reload --port 8000
+```
+
+Swagger UI: **http://localhost:8000/docs**
+
+```bash
+# Quick test with bundled sample data
+curl -X POST http://localhost:8000/api/v1/transform/samples \
+  -H "Content-Type: application/json" \
+  -d "{\"use_custom_example\": true}"
+```
+
+---
+
+## Architecture
+
+```
+src/candidate_transformer/
+├── cli/           # Typer CLI
+├── ingest/        # CSV, ATS JSON, GitHub, resume, notes, manual form
+├── normalize/     # Phone, date, skill, location
+├── merge/         # Conflict resolution + deduplication
+├── confidence/    # Overall confidence scoring
+├── project/       # Configurable output projection
+├── validate/      # Schema validation
+├── api/           # FastAPI REST layer
+├── models/        # Pydantic schemas
+└── pipeline/      # Orchestrator
+```
+
+---
 
 ## Merge & Confidence Policy
 
-- **Match keys:** primary email, fallback normalized full name
+- **Match keys:** normalized email (primary), full name (fallback)
 - **Conflict resolution:** structured sources beat unstructured; higher per-field confidence wins
-- **Never invent data:** missing/garbage inputs become `null` or are omitted
-- **Provenance:** every merged field records `{ field, source, method, confidence }`
-- **Overall confidence:** weighted average across key fields, adjusted for multi-source agreement
+- **Provenance:** every field records `{ field, source, method, confidence }`
+- **Overall confidence:** weighted average over key fields; +0.05 if ≥3 sources agree
+- **Principle:** wrong-but-confident is worse than honestly empty — missing/garbage → `null`
+
+> Custom projection copies `overall_confidence` from the full canonical merge — it is not recalculated for the smaller output subset.
+
+---
 
 ## Custom Output Config
 
-See `config/custom_output.json`:
+See [`config/custom_output.json`](config/custom_output.json):
 
 ```json
 {
@@ -126,132 +158,74 @@ See `config/custom_output.json`:
 }
 ```
 
-Supported `on_missing` values: `null`, `omit`, `error`.
+Supported `on_missing` values: `null` · `omit` · `error`
+
+---
 
 ## Tests
 
 ```bash
 pytest -q
+# 15 tests — normalizers, merge, projection, pipeline, API, manual ingestor
 ```
 
-## REST API
+---
 
-Run locally:
+## Tech Stack
 
-```bash
-pip install -e ".[api]"
-uvicorn candidate_transformer.api.main:app --reload --port 8000
-```
+| Layer | Choice |
+| --- | --- |
+| Language | Python 3.11+ |
+| CLI | Typer |
+| API | FastAPI + Uvicorn |
+| Web UI | Streamlit |
+| Schemas | Pydantic v2 |
+| Phones | phonenumbers (E.164) |
+| Dates | python-dateutil |
+| Resume | pypdf, python-docx |
+| Tests | pytest |
 
-Interactive docs: **http://localhost:8000/docs**
+---
 
-### Endpoints
+## Deploy
 
-| Method | Path | Description |
+| Platform | File | URL |
 | --- | --- | --- |
-| `GET` | `/health` | Health check |
-| `GET` | `/api/v1/` | API metadata |
-| `GET` | `/api/v1/config/example` | Example custom output config |
-| `POST` | `/api/v1/transform` | Upload files (`multipart/form-data`) |
-| `POST` | `/api/v1/transform/samples` | Run pipeline on bundled sample data |
+| Streamlit Cloud | `web/app.py` + `requirements-web.txt` | [Live demo](https://abhinav3289-eightfold-assignment-candidate-profil-webapp-nghud3.streamlit.app/) |
+| Render | `render.yaml` + `Dockerfile` / `Dockerfile.api` | Blueprint deploy |
 
-### Example — sample data (JSON)
+Regenerate design PDF:
 
 ```bash
-curl -X POST http://localhost:8000/api/v1/transform/samples \
-  -H "Content-Type: application/json" \
-  -d "{\"use_custom_example\": true}"
+python docs/generate_pdf.py
 ```
 
-### Example — file upload
+---
 
-```bash
-curl -X POST http://localhost:8000/api/v1/transform \
-  -F "files=@data/samples/recruiter.csv" \
-  -F "files=@data/samples/ats.json"
-```
+## Assumptions & Descoped
 
-Optional form fields: `config_json`, `use_custom_example`, `include_provenance`, `include_confidence`.
-
-Set `API_KEY` in the environment to require the `X-API-Key` header on protected routes.
-
-Deploy API on Render using `Dockerfile.api`, or locally:
-
-```bash
-docker build -f Dockerfile.api -t candidate-transformer-api .
-docker run -p 8000:8000 candidate-transformer-api
-```
-
-## Web UI (Visual Demo)
-
-Run locally:
-
-```bash
-pip install -e ".[web]"
-streamlit run web/app.py
-```
-
-Open `http://localhost:8501` — upload files or use bundled samples, then view JSON, provenance, and skills in the browser.
-
-### Manual entry (no file upload)
-
-1. Start the UI: `streamlit run web/app.py`
-2. Select **Manual entry**
-3. Click **Load example values** (optional)
-4. Fill or edit the form fields
-5. Click **Save form values**
-6. Click **Run pipeline**
-
-Use the optional **conflicting unstructured source** checkbox to test merge behavior across sources.
-
-## Deploy Free on Cloud
-
-| Platform | Cost | Best for | Setup |
-| --- | --- | --- | --- |
-| [Streamlit Community Cloud](https://share.streamlit.io) | Free | Easiest visual demo | Connect GitHub repo, main file: `web/app.py`, use `requirements-web.txt` |
-| [Render](https://render.com) | Free tier | UI + API (sleeps after 15 min idle) | Push repo, use included `render.yaml` (deploys both services) |
-| [Hugging Face Spaces](https://huggingface.co/spaces) | Free (public) | Portfolio / shareable URL | New Space → Streamlit → point to `web/app.py` |
-| [Fly.io](https://fly.io) | Free allowance | Docker deploy | `fly launch` with included `Dockerfile` |
-
-### Option A — Streamlit Cloud (recommended, ~5 minutes)
-
-1. Push this repo to **public GitHub**
-2. Go to [share.streamlit.io](https://share.streamlit.io) → **New app**
-3. Select your repo, branch `main`, main file path: **`web/app.py`**
-4. Advanced settings → Python deps file: **`requirements-web.txt`**
-5. Click **Deploy** → you get a public URL like `https://your-app.streamlit.app`
-
-### Option B — Render (Docker)
-
-1. Push repo to GitHub
-2. [render.com](https://render.com) → **New +** → **Blueprint** → connect repo
-3. Render reads `render.yaml` and builds the Docker image
-4. Share the generated `*.onrender.com` URL
-
-### Option C — Run locally with Docker
-
-```bash
-docker build -t candidate-transformer .
-docker run -p 8501:8501 candidate-transformer
-```
-
-Then open `http://localhost:8501`.
-
-**Note:** Free tiers sleep when idle (cold start ~30–60s). For internship demo video, Streamlit Cloud or Render is sufficient.
-
-## Assumptions & Descoped Items
-
-- GitHub live API is optional; sample JSON is used for deterministic demo runs
-- LinkedIn scraping is not implemented (ToS constraints); links are taken from ATS/notes
-- Resume parsing uses heuristics, not ML/NLP models
-- Single-candidate merge per run (batch folder processing can be added as a thin wrapper)
+- GitHub live API is optional; sample JSON used for deterministic demos
+- LinkedIn scraping not implemented (ToS); links sourced from ATS/notes
+- Resume parsing uses heuristics, not ML/NLP
+- Single-candidate merge per run (no batch folder processing)
 - Location parsing is rule-based, not geocoded
 
-## Demo Video Checklist
+---
 
-See [`docs/SUBMISSION.md`](docs/SUBMISSION.md) for full script. Cover:
+## Demo Video Guide
 
-1. Live app → **Use sample data** → default JSON output (provenance + confidence)
-2. **Custom projection config** → show remapped fields (`primary_email`, `phone`, `skills`)
-3. Explain merge policy (structured > unstructured) and one edge case (invalid phone → omitted)
-4. Mention GitHub repo + `pytest -q` passing
+Full voiceover script: [`docs/Abhinav_Patel_Eightfold.pdf`](docs/Abhinav_Patel_Eightfold.pdf) (Page 2)
+
+1. Live app → **Use sample data** → default JSON (provenance + confidence)
+2. **Custom projection config** → show `primary_email`, `phone`, flattened `skills`
+3. Explain: structured > unstructured merge policy
+4. Edge case: invalid phone → `null`, never invented
+5. Show GitHub + `pytest -q` passing
+
+---
+
+## Author
+
+**Abhinav Patel**  
+Indian Institute of Information Technology Bhopal (IIIT Bhopal)  
+Eightfold Engineering Intern Assignment · Jul–Dec 2026
