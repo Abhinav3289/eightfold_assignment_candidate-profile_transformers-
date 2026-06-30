@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: candidate-transformer-ui
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
+    healthCheckPath: /_stcore/health
+
+  - type: web
+    name: candidate-transformer-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile.api
+    autoDeploy: true
+    healthCheckPath: /health
+    envVars:
+      - key: APP_DEBUG
+        value: "true"
+      - key: CORS_ORIGINS
+        value: "*"
