@@ -1,0 +1,10 @@
+{
+  "login": "priyadev",
+  "name": "Priya Sharma",
+  "email": "priya.sharma@example.com",
+  "bio": "Backend engineer | Python, Go, distributed systems",
+  "location": "San Francisco",
+  "html_url": "https://github.com/priyadev",
+  "blog": "https://priyadev.dev",
+  "languages": ["Python", "Go", "TypeScript", "Docker"]
+}

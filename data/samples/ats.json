@@ -1,0 +1,39 @@
+{
+  "candidate_name": "Priya Sharma",
+  "contact_email": "priya.sharma@example.com",
+  "mobile": "415-555-0198",
+  "current_role": "Senior Software Engineer",
+  "location": {
+    "city": "San Francisco",
+    "region": "CA",
+    "country": "US"
+  },
+  "total_experience_years": 7.5,
+  "skill_tags": ["python", "aws", "kubernetes", "react", "postgresql"],
+  "work_history": [
+    {
+      "employer": "Acme Corp",
+      "role": "Senior Software Engineer",
+      "start_date": "Jan 2021",
+      "end_date": "Present",
+      "description": "Lead backend services and mentoring."
+    },
+    {
+      "employer": "Beta Labs",
+      "role": "Software Engineer",
+      "start_date": "2018-06",
+      "end_date": "2020-12",
+      "description": "Built data pipelines."
+    }
+  ],
+  "education_history": [
+    {
+      "school": "UC Berkeley",
+      "degree": "BS",
+      "major": "Computer Science",
+      "graduation_year": 2018
+    }
+  ],
+  "linkedin_url": "https://linkedin.com/in/priya-sharma-dev",
+  "github_url": "https://github.com/priyadev"
+}

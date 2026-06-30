@@ -1,0 +1,14 @@
+Priya Sharma
+priya.sharma@example.com | +91-415-555-0198 | San Francisco, CA
+
+Summary
+Backend engineer with 7+ years building scalable services.
+
+Skills
+Python, AWS, Kubernetes, PostgreSQL, Docker, REST API
+Experience
+Senior Software Engineer - Acme Corp (Jan 2021 - Present)
+Software Engineer - Beta Labs (Jun 2018 - Dec 2020)
+
+Education
+BS - UC Berkeley (2018)
