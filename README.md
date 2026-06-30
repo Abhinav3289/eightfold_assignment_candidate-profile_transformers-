@@ -1,63 +1,53 @@
 # Multi-Source Candidate Data Transformer
 
-**Abhinav Patel · IIIT Bhopal · Eightfold Engineering Intern (Jul–Dec 2026)**
+Ingests candidate data from multiple structured and unstructured sources, merges them into a canonical profile with provenance and confidence, and projects the result to a runtime-configurable output schema.
 
-A production-ready pipeline that ingests structured and unstructured candidate sources, merges them into a canonical profile with **provenance** and **confidence**, and projects to a **runtime-configurable** output schema.
-
----
-
-## Submission Links
-
-| Deliverable | Link |
-| --- | --- |
-| **Live Demo (Web UI)** | https://abhinav3289-eightfold-assignment-candidate-profil-webapp-nghud3.streamlit.app/ |
-| **GitHub Repository** | https://github.com/Abhinav3289/eightfold_assignment_candidate-profile_transformers- |
-| **Design Document (PDF)** | [`docs/Abhinav_Patel_Eightfold_Design_Only.pdf`](docs/Abhinav_Patel_Eightfold_Design_Only.pdf) |
-| **Design + Demo Script (PDF)** | [`docs/Abhinav_Patel_Eightfold.pdf`](docs/Abhinav_Patel_Eightfold.pdf) |
-| **Sample Output (default)** | [`output/default_profile.json`](output/default_profile.json) |
-| **Sample Output (custom)** | [`output/custom_profile.json`](output/custom_profile.json) |
-| **Demo Video** | _[Add your YouTube/Loom link here]_ |
-
-> Rename the design PDF to `Abhinav_Patel_<YourEmail>_Eightfold.pdf` before email submission.
+**Author:** Abhinav Patel · IIIT Bhopal  
+**Live demo:** https://abhinav3289-eightfold-assignment-candidate-profil-webapp-nghud3.streamlit.app/
 
 ---
 
-## What This Project Does
+## Overview
 
-| Capability | Details |
-| --- | --- |
-| **Structured sources** | Recruiter CSV, ATS JSON |
-| **Unstructured sources** | GitHub profile, resume (TXT/PDF/DOCX), recruiter notes |
-| **Normalization** | E.164 phones, YYYY-MM dates, canonical skills, ISO-3166 countries |
-| **Merge policy** | Structured beats unstructured; higher confidence wins; never invent data |
-| **Configurable output** | Runtime JSON config — field select, rename, normalize, `on_missing` |
-| **Interfaces** | CLI · REST API (FastAPI) · Web UI (Streamlit) |
+This project implements an end-to-end candidate data pipeline for the Eightfold Engineering Intern assignment. It supports recruiter CSV exports, ATS JSON, GitHub profiles, resumes, and free-form notes, producing a normalized canonical profile that can be reshaped at runtime without modifying the core engine.
 
-**Sample candidate:** Abhinav Patel — B.Tech CSE, IIIT Bhopal (2026), intern at TechNova Solutions, Bhopal IN.
+**Pipeline:** detect → ingest → normalize → merge → confidence → project → validate
 
-**Pipeline:** `detect → ingest → normalize → merge → confidence → project → validate`
+**Sample inputs** model a fresher profile: Abhinav Patel, B.Tech CSE at IIIT Bhopal (2026), with an internship at TechNova Solutions, Bhopal, India.
 
 ---
 
-## Quick Start (Local)
+## Features
+
+- Multi-source ingestion (structured + unstructured)
+- Normalization: E.164 phones, YYYY-MM dates, canonical skills, ISO-3166 countries
+- Merge with conflict resolution and full provenance tracking
+- Weighted overall confidence score
+- Configurable output projection (`OutputConfig` JSON)
+- CLI, REST API, and Streamlit web UI
+
+---
+
+## Installation
 
 ```bash
 git clone https://github.com/Abhinav3289/eightfold_assignment_candidate-profile_transformers-.git
 cd eightfold_assignment_candidate-profile_transformers-
 
 python -m venv .venv
-
-# Windows
-.venv\Scripts\activate
-
-# macOS / Linux
-# source .venv/bin/activate
+.venv\Scripts\activate        # Windows
+# source .venv/bin/activate   # macOS / Linux
 
 pip install -e ".[dev]"
-pytest -q
 ```
 
-### CLI — default canonical output
+---
+
+## Usage
+
+### CLI
+
+Default canonical output:
 
 ```bash
 python -m candidate_transformer \
@@ -69,7 +59,7 @@ python -m candidate_transformer \
   -o output/default_profile.json
 ```
 
-### CLI — custom projection config
+Custom projection:
 
 ```bash
 python -m candidate_transformer \
@@ -89,9 +79,7 @@ pip install -r requirements-web.txt
 streamlit run web/app.py
 ```
 
-Open **http://localhost:8501** — or use the [live demo](https://abhinav3289-eightfold-assignment-candidate-profil-webapp-nghud3.streamlit.app/) (no install required).
-
-**Input modes:** Use sample data · Upload files · Manual entry form
+Open http://localhost:8501. The UI supports sample data, file upload, and manual form entry.
 
 ### REST API
 
@@ -100,10 +88,9 @@ pip install -r requirements-api.txt
 uvicorn candidate_transformer.api.main:app --reload --port 8000
 ```
 
-Swagger UI: **http://localhost:8000/docs**
+API documentation: http://localhost:8000/docs
 
 ```bash
-# Quick test with bundled sample data
 curl -X POST http://localhost:8000/api/v1/transform/samples \
   -H "Content-Type: application/json" \
   -d "{\"use_custom_example\": true}"
@@ -111,54 +98,65 @@ curl -X POST http://localhost:8000/api/v1/transform/samples \
 
 ---
 
-## Architecture
+## Project Structure
 
 ```
 src/candidate_transformer/
 ├── cli/           # Typer CLI
-├── ingest/        # CSV, ATS JSON, GitHub, resume, notes, manual form
-├── normalize/     # Phone, date, skill, location
-├── merge/         # Conflict resolution + deduplication
+├── ingest/        # Source parsers (CSV, JSON, GitHub, resume, notes, manual)
+├── normalize/     # Phone, date, skill, location normalizers
+├── merge/         # Conflict resolution and deduplication
 ├── confidence/    # Overall confidence scoring
-├── project/       # Configurable output projection
+├── project/       # Output projection layer
 ├── validate/      # Schema validation
-├── api/           # FastAPI REST layer
-├── models/        # Pydantic schemas
+├── api/           # FastAPI application
+├── models/        # Pydantic models
 └── pipeline/      # Orchestrator
+
+web/app.py         # Streamlit UI
+config/            # Output projection configs
+data/samples/      # Sample input files
+output/            # Generated profile JSON
+docs/              # Design document (PDF)
+tests/             # Unit and integration tests
 ```
 
 ---
 
-## Merge & Confidence Policy
+## Design
 
-- **Match keys:** normalized email (primary), full name (fallback)
-- **Conflict resolution:** structured sources beat unstructured; higher per-field confidence wins
-- **Provenance:** every field records `{ field, source, method, confidence }`
-- **Overall confidence:** weighted average over key fields; +0.05 if ≥3 sources agree
-- **Principle:** wrong-but-confident is worse than honestly empty — missing/garbage → `null`
+### Canonical schema
 
-> Custom projection copies `overall_confidence` from the full canonical merge — it is not recalculated for the smaller output subset.
+`candidate_id`, `full_name`, `emails[]`, `phones[]`, `location`, `links`, `headline`, `years_experience`, `skills[]`, `experience[]`, `education[]`, `provenance[]`, `overall_confidence`
+
+### Merge policy
+
+- Match candidates by normalized email, then full name
+- Structured sources take precedence over unstructured sources
+- Within the same tier, higher per-field confidence wins
+- List fields are unioned and deduplicated
+- Missing or invalid values become `null`; data is never invented
+
+### Configurable output
+
+The projection layer accepts a runtime JSON config for field selection, remapping (`from`), per-field normalization, and missing-value behavior (`null`, `omit`, `error`). The internal canonical record remains unchanged.
+
+`overall_confidence` is computed on the full merged profile and passed through to projected output.
+
+Example config: [`config/custom_output.json`](config/custom_output.json)
+
+### Technical design document
+
+[`docs/Abhinav_Patel_Eightfold_Design_Only.pdf`](docs/Abhinav_Patel_Eightfold_Design_Only.pdf)
 
 ---
 
-## Custom Output Config
+## Sample Output
 
-See [`config/custom_output.json`](config/custom_output.json):
-
-```json
-{
-  "fields": [
-    { "path": "full_name", "type": "string", "required": true },
-    { "path": "primary_email", "from": "emails[0]", "type": "string", "required": true },
-    { "path": "phone", "from": "phones[0]", "type": "string", "normalize": "E164" },
-    { "path": "skills", "from": "skills[].name", "type": "string[]", "normalize": "canonical" }
-  ],
-  "include_confidence": true,
-  "on_missing": "null"
-}
-```
-
-Supported `on_missing` values: `null` · `omit` · `error`
+| Output | File |
+| --- | --- |
+| Default canonical profile | [`output/default_profile.json`](output/default_profile.json) |
+| Custom projection | [`output/custom_profile.json`](output/custom_profile.json) |
 
 ---
 
@@ -166,66 +164,32 @@ Supported `on_missing` values: `null` · `omit` · `error`
 
 ```bash
 pytest -q
-# 15 tests — normalizers, merge, projection, pipeline, API, manual ingestor
 ```
 
 ---
 
 ## Tech Stack
 
-| Layer | Choice |
-| --- | --- |
-| Language | Python 3.11+ |
-| CLI | Typer |
-| API | FastAPI + Uvicorn |
-| Web UI | Streamlit |
-| Schemas | Pydantic v2 |
-| Phones | phonenumbers (E.164) |
-| Dates | python-dateutil |
-| Resume | pypdf, python-docx |
-| Tests | pytest |
+Python 3.11+ · Typer · FastAPI · Streamlit · Pydantic v2 · phonenumbers · python-dateutil · pypdf · python-docx · pytest
 
 ---
 
-## Deploy
+## Deployment
 
-| Platform | File | URL |
-| --- | --- | --- |
-| Streamlit Cloud | `web/app.py` + `requirements-web.txt` | [Live demo](https://abhinav3289-eightfold-assignment-candidate-profil-webapp-nghud3.streamlit.app/) |
-| Render | `render.yaml` + `Dockerfile` / `Dockerfile.api` | Blueprint deploy |
-
-Regenerate design PDF:
-
-```bash
-python docs/generate_pdf.py
-```
+The web UI is deployed on Streamlit Cloud. Docker and Render configurations are included (`Dockerfile`, `Dockerfile.api`, `render.yaml`).
 
 ---
 
-## Assumptions & Descoped
+## Limitations
 
-- GitHub live API is optional; sample JSON used for deterministic demos
-- LinkedIn scraping not implemented (ToS); links sourced from ATS/notes
-- Resume parsing uses heuristics, not ML/NLP
-- Single-candidate merge per run (no batch folder processing)
-- Location parsing is rule-based, not geocoded
-
----
-
-## Demo Video Guide
-
-Full voiceover script: [`docs/Abhinav_Patel_Eightfold.pdf`](docs/Abhinav_Patel_Eightfold.pdf) (Page 2)
-
-1. Live app → **Use sample data** → default JSON (provenance + confidence)
-2. **Custom projection config** → show `primary_email`, `phone`, flattened `skills`
-3. Explain: structured > unstructured merge policy
-4. Edge case: invalid phone → `null`, never invented
-5. Show GitHub + `pytest -q` passing
+- GitHub ingestion uses bundled sample JSON by default; live API fetch is supported but optional
+- LinkedIn profile scraping is not implemented
+- Resume parsing is heuristic-based
+- Single-candidate processing per run
+- Location parsing is rule-based
 
 ---
 
-## Author
+## License
 
-**Abhinav Patel**  
-Indian Institute of Information Technology Bhopal (IIIT Bhopal)  
-Eightfold Engineering Intern Assignment · Jul–Dec 2026
+Submitted as part of the Eightfold Engineering Intern (Jul–Dec 2026) technical assessment.
