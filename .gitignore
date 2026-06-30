@@ -11,5 +11,7 @@ venv/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
-output/*.json
+output/*
 !output/.gitkeep
+!output/default_profile.json
+!output/custom_profile.json

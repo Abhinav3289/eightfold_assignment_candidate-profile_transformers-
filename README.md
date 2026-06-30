@@ -2,6 +2,25 @@
 
 Production-ready pipeline for the **Eightfold Engineering Intern (Jul–Dec 2026)** assignment. Ingests structured and unstructured candidate sources, merges them into a canonical profile with provenance and confidence, then projects to a runtime-configurable output schema.
 
+## Submission
+
+| Resource | Link |
+| --- | --- |
+| **Live Demo (Web UI)** | https://abhinav3289-eightfold-assignment-candidate-profil-webapp-nghud3.streamlit.app/ |
+| **GitHub Repository** | https://github.com/Abhinav3289/eightfold_assignment_candidate-profile_transformers- |
+| **Design Document** | [`docs/DESIGN.md`](docs/DESIGN.md) → export as `Abhinav_Patel_<YourEmail>_Eightfold.pdf` |
+| **Submission Guide** | [`docs/SUBMISSION.md`](docs/SUBMISSION.md) |
+| **Sample Outputs** | [`output/default_profile.json`](output/default_profile.json), [`output/custom_profile.json`](output/custom_profile.json) |
+| **Demo Video** | _Add your link in README and `docs/SUBMISSION.md`_ |
+
+### Quick verify (for reviewers)
+
+```bash
+pip install -e ".[dev]"
+pytest -q
+streamlit run web/app.py   # or use live demo URL above
+```
+
 ## Tech Stack
 
 | Layer | Choice | Why |
@@ -229,6 +248,9 @@ Then open `http://localhost:8501`.
 
 ## Demo Video Checklist
 
-1. Run default transform command and show `output/default_profile.json`
-2. Run custom config command and show projected fields
+See [`docs/SUBMISSION.md`](docs/SUBMISSION.md) for full script. Cover:
+
+1. Live app → **Use sample data** → default JSON output (provenance + confidence)
+2. **Custom projection config** → show remapped fields (`primary_email`, `phone`, `skills`)
 3. Explain merge policy (structured > unstructured) and one edge case (invalid phone → omitted)
+4. Mention GitHub repo + `pytest -q` passing
