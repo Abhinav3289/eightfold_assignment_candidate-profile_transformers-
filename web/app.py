@@ -3,17 +3,21 @@
 from __future__ import annotations
 
 import json
+import sys
 import tempfile
 from pathlib import Path
 from typing import Any
+
+ROOT = Path(__file__).resolve().parents[1]
+SRC = ROOT / "src"
+if SRC.is_dir() and str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))
 
 import streamlit as st
 
 from candidate_transformer.ingest import ingest_manual_form
 from candidate_transformer.models import OutputConfig
 from candidate_transformer.pipeline import load_output_config, run_pipeline
-
-ROOT = Path(__file__).resolve().parents[1]
 SAMPLES = ROOT / "data" / "samples"
 DEFAULT_CONFIG = ROOT / "config" / "custom_output.json"
 
