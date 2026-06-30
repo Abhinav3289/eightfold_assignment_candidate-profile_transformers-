@@ -27,6 +27,7 @@ src/candidate_transformer/
 ├── confidence/    # Overall confidence scoring
 ├── project/       # Configurable output projection layer
 ├── validate/      # Schema validation
+├── api/           # FastAPI REST layer
 ├── models/        # Canonical + config Pydantic models
 └── pipeline/      # Orchestrator (detect → validate)
 ```
@@ -112,6 +113,111 @@ Supported `on_missing` values: `null`, `omit`, `error`.
 ```bash
 pytest -q
 ```
+
+## REST API
+
+Run locally:
+
+```bash
+pip install -e ".[api]"
+uvicorn candidate_transformer.api.main:app --reload --port 8000
+```
+
+Interactive docs: **http://localhost:8000/docs**
+
+### Endpoints
+
+| Method | Path | Description |
+| --- | --- | --- |
+| `GET` | `/health` | Health check |
+| `GET` | `/api/v1/` | API metadata |
+| `GET` | `/api/v1/config/example` | Example custom output config |
+| `POST` | `/api/v1/transform` | Upload files (`multipart/form-data`) |
+| `POST` | `/api/v1/transform/samples` | Run pipeline on bundled sample data |
+
+### Example — sample data (JSON)
+
+```bash
+curl -X POST http://localhost:8000/api/v1/transform/samples \
+  -H "Content-Type: application/json" \
+  -d "{\"use_custom_example\": true}"
+```
+
+### Example — file upload
+
+```bash
+curl -X POST http://localhost:8000/api/v1/transform \
+  -F "files=@data/samples/recruiter.csv" \
+  -F "files=@data/samples/ats.json"
+```
+
+Optional form fields: `config_json`, `use_custom_example`, `include_provenance`, `include_confidence`.
+
+Set `API_KEY` in the environment to require the `X-API-Key` header on protected routes.
+
+Deploy API on Render using `Dockerfile.api`, or locally:
+
+```bash
+docker build -f Dockerfile.api -t candidate-transformer-api .
+docker run -p 8000:8000 candidate-transformer-api
+```
+
+## Web UI (Visual Demo)
+
+Run locally:
+
+```bash
+pip install -e ".[web]"
+streamlit run web/app.py
+```
+
+Open `http://localhost:8501` — upload files or use bundled samples, then view JSON, provenance, and skills in the browser.
+
+### Manual entry (no file upload)
+
+1. Start the UI: `streamlit run web/app.py`
+2. Select **Manual entry**
+3. Click **Load example values** (optional)
+4. Fill or edit the form fields
+5. Click **Save form values**
+6. Click **Run pipeline**
+
+Use the optional **conflicting unstructured source** checkbox to test merge behavior across sources.
+
+## Deploy Free on Cloud
+
+| Platform | Cost | Best for | Setup |
+| --- | --- | --- | --- |
+| [Streamlit Community Cloud](https://share.streamlit.io) | Free | Easiest visual demo | Connect GitHub repo, main file: `web/app.py`, use `requirements-web.txt` |
+| [Render](https://render.com) | Free tier | UI + API (sleeps after 15 min idle) | Push repo, use included `render.yaml` (deploys both services) |
+| [Hugging Face Spaces](https://huggingface.co/spaces) | Free (public) | Portfolio / shareable URL | New Space → Streamlit → point to `web/app.py` |
+| [Fly.io](https://fly.io) | Free allowance | Docker deploy | `fly launch` with included `Dockerfile` |
+
+### Option A — Streamlit Cloud (recommended, ~5 minutes)
+
+1. Push this repo to **public GitHub**
+2. Go to [share.streamlit.io](https://share.streamlit.io) → **New app**
+3. Select your repo, branch `main`, main file path: **`web/app.py`**
+4. Advanced settings → Python deps file: **`requirements-web.txt`**
+5. Click **Deploy** → you get a public URL like `https://your-app.streamlit.app`
+
+### Option B — Render (Docker)
+
+1. Push repo to GitHub
+2. [render.com](https://render.com) → **New +** → **Blueprint** → connect repo
+3. Render reads `render.yaml` and builds the Docker image
+4. Share the generated `*.onrender.com` URL
+
+### Option C — Run locally with Docker
+
+```bash
+docker build -t candidate-transformer .
+docker run -p 8501:8501 candidate-transformer
+```
+
+Then open `http://localhost:8501`.
+
+**Note:** Free tiers sleep when idle (cold start ~30–60s). For internship demo video, Streamlit Cloud or Render is sufficient.
 
 ## Assumptions & Descoped Items
 

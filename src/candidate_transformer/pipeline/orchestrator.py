@@ -40,13 +40,18 @@ def _detect_and_ingest(path: Path) -> SourceRecord | None:
 
 
 def run_pipeline(
-    input_paths: list[Path],
+    input_paths: list[Path] | None = None,
     output_config: OutputConfig | None = None,
+    source_records: list[SourceRecord] | None = None,
 ) -> dict[str, Any]:
     records: list[SourceRecord] = []
-    for path in input_paths:
+    for path in input_paths or []:
         record = _detect_and_ingest(path)
         if record and record.fields:
+            records.append(record)
+
+    for record in source_records or []:
+        if record.fields:
             records.append(record)
 
     if not records:
