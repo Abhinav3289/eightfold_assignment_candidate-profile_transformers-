@@ -1,0 +1,17 @@
+{
+  "full_name": "Priya Sharma",
+  "primary_email": "priya.sharma@example.com",
+  "phone": "+14155550198",
+  "skills": [
+    "Python",
+    "AWS",
+    "Kubernetes",
+    "React",
+    "PostgreSQL",
+    "Go",
+    "TypeScript",
+    "Docker",
+    "REST APIs"
+  ],
+  "overall_confidence": 0.918
+}

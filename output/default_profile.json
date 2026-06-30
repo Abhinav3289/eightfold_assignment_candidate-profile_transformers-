@@ -1,0 +1,249 @@
+{
+  "candidate_id": "cand_6cd1cf87520c",
+  "full_name": "Priya Sharma",
+  "emails": [
+    "priya.sharma@example.com"
+  ],
+  "phones": [
+    "+14155550198"
+  ],
+  "location": {
+    "city": "San Francisco",
+    "region": "CA",
+    "country": "US"
+  },
+  "links": {
+    "linkedin": "https://linkedin.com/in/priya-sharma-dev",
+    "github": "https://github.com/priyadev",
+    "portfolio": "https://priyadev.dev",
+    "other": []
+  },
+  "headline": "Senior Software Engineer",
+  "years_experience": 7.5,
+  "skills": [
+    {
+      "name": "Python",
+      "confidence": 0.8,
+      "sources": [
+        "ats",
+        "github_profile",
+        "resume",
+        "recruiter_notes"
+      ]
+    },
+    {
+      "name": "AWS",
+      "confidence": 0.8,
+      "sources": [
+        "ats",
+        "resume",
+        "recruiter_notes"
+      ]
+    },
+    {
+      "name": "Kubernetes",
+      "confidence": 0.8,
+      "sources": [
+        "ats",
+        "resume"
+      ]
+    },
+    {
+      "name": "React",
+      "confidence": 0.8,
+      "sources": [
+        "ats"
+      ]
+    },
+    {
+      "name": "PostgreSQL",
+      "confidence": 0.8,
+      "sources": [
+        "ats",
+        "resume"
+      ]
+    },
+    {
+      "name": "Go",
+      "confidence": 0.62,
+      "sources": [
+        "github_profile"
+      ]
+    },
+    {
+      "name": "TypeScript",
+      "confidence": 0.62,
+      "sources": [
+        "github_profile"
+      ]
+    },
+    {
+      "name": "Docker",
+      "confidence": 0.62,
+      "sources": [
+        "github_profile",
+        "resume"
+      ]
+    },
+    {
+      "name": "REST APIs",
+      "confidence": 0.58,
+      "sources": [
+        "resume"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "Acme Corp",
+      "title": "Senior Software Engineer",
+      "start": "2021-01",
+      "end": null,
+      "summary": "Lead backend services and mentoring."
+    },
+    {
+      "company": "Beta Labs",
+      "title": "Software Engineer",
+      "start": "2018-06",
+      "end": "2020-12",
+      "summary": "Built data pipelines."
+    }
+  ],
+  "education": [
+    {
+      "institution": "UC Berkeley",
+      "degree": "BS",
+      "field": "Computer Science",
+      "end_year": 2018
+    }
+  ],
+  "provenance": [
+    {
+      "field": "full_name",
+      "source": "recruiter",
+      "method": "direct_map",
+      "confidence": 0.92
+    },
+    {
+      "field": "emails",
+      "source": "recruiter",
+      "method": "direct_map",
+      "confidence": 0.95
+    },
+    {
+      "field": "phones",
+      "source": "recruiter",
+      "method": "direct_map+normalize",
+      "confidence": 0.9
+    },
+    {
+      "field": "location",
+      "source": "recruiter",
+      "method": "direct_map",
+      "confidence": 0.8
+    },
+    {
+      "field": "headline",
+      "source": "recruiter",
+      "method": "direct_map",
+      "confidence": 0.85
+    },
+    {
+      "field": "years_experience",
+      "source": "ats",
+      "method": "schema_map",
+      "confidence": 0.75
+    },
+    {
+      "field": "skills",
+      "source": "ats",
+      "method": "schema_map",
+      "confidence": 0.8
+    },
+    {
+      "field": "skills",
+      "source": "ats",
+      "method": "schema_map",
+      "confidence": 0.8
+    },
+    {
+      "field": "skills",
+      "source": "ats",
+      "method": "schema_map",
+      "confidence": 0.8
+    },
+    {
+      "field": "skills",
+      "source": "ats",
+      "method": "schema_map",
+      "confidence": 0.8
+    },
+    {
+      "field": "skills",
+      "source": "ats",
+      "method": "schema_map",
+      "confidence": 0.8
+    },
+    {
+      "field": "skills",
+      "source": "github_profile",
+      "method": "github_repos_languages",
+      "confidence": 0.62
+    },
+    {
+      "field": "skills",
+      "source": "github_profile",
+      "method": "github_repos_languages",
+      "confidence": 0.62
+    },
+    {
+      "field": "skills",
+      "source": "github_profile",
+      "method": "github_repos_languages",
+      "confidence": 0.62
+    },
+    {
+      "field": "skills",
+      "source": "resume",
+      "method": "section_parse",
+      "confidence": 0.58
+    },
+    {
+      "field": "experience",
+      "source": "recruiter",
+      "method": "direct_map",
+      "confidence": 0.88
+    },
+    {
+      "field": "experience",
+      "source": "ats",
+      "method": "schema_map",
+      "confidence": 0.86
+    },
+    {
+      "field": "education",
+      "source": "ats",
+      "method": "schema_map",
+      "confidence": 0.84
+    },
+    {
+      "field": "links.linkedin",
+      "source": "ats",
+      "method": "schema_map",
+      "confidence": 0.8
+    },
+    {
+      "field": "links.github",
+      "source": "ats",
+      "method": "schema_map",
+      "confidence": 0.8
+    },
+    {
+      "field": "links.portfolio",
+      "source": "github_profile",
+      "method": "github_api",
+      "confidence": 0.75
+    }
+  ],
+  "overall_confidence": 0.918
+}
