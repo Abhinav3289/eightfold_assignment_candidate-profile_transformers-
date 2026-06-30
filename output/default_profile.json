@@ -1,25 +1,25 @@
 {
-  "candidate_id": "cand_6cd1cf87520c",
-  "full_name": "Priya Sharma",
+  "candidate_id": "cand_5034ad715b57",
+  "full_name": "Abhinav Patel",
   "emails": [
-    "priya.sharma@example.com"
+    "abhinav.patel@example.com"
   ],
   "phones": [
-    "+14155550198"
+    "+919876543210"
   ],
   "location": {
-    "city": "San Francisco",
-    "region": "CA",
-    "country": "US"
+    "city": "Bhopal",
+    "region": "Madhya Pradesh",
+    "country": "IN"
   },
   "links": {
-    "linkedin": "https://linkedin.com/in/priya-sharma-dev",
-    "github": "https://github.com/priyadev",
-    "portfolio": "https://priyadev.dev",
+    "linkedin": "https://linkedin.com/in/abhinav-patel-iiit",
+    "github": "https://github.com/abhinav3289",
+    "portfolio": "https://abhinavpatel.dev",
     "other": []
   },
-  "headline": "Senior Software Engineer",
-  "years_experience": 7.5,
+  "headline": "B.Tech CSE Student (Final Year)",
+  "years_experience": 1.0,
   "skills": [
     {
       "name": "Python",
@@ -32,19 +32,20 @@
       ]
     },
     {
-      "name": "AWS",
+      "name": "Java",
       "confidence": 0.8,
       "sources": [
         "ats",
-        "resume",
-        "recruiter_notes"
+        "github_profile",
+        "resume"
       ]
     },
     {
-      "name": "Kubernetes",
+      "name": "JavaScript",
       "confidence": 0.8,
       "sources": [
         "ats",
+        "github_profile",
         "resume"
       ]
     },
@@ -52,11 +53,12 @@
       "name": "React",
       "confidence": 0.8,
       "sources": [
-        "ats"
+        "ats",
+        "resume"
       ]
     },
     {
-      "name": "PostgreSQL",
+      "name": "SQL",
       "confidence": 0.8,
       "sources": [
         "ats",
@@ -64,25 +66,33 @@
       ]
     },
     {
-      "name": "Go",
-      "confidence": 0.62,
+      "name": "Django",
+      "confidence": 0.8,
       "sources": [
-        "github_profile"
-      ]
-    },
-    {
-      "name": "TypeScript",
-      "confidence": 0.62,
-      "sources": [
-        "github_profile"
-      ]
-    },
-    {
-      "name": "Docker",
-      "confidence": 0.62,
-      "sources": [
-        "github_profile",
+        "ats",
         "resume"
+      ]
+    },
+    {
+      "name": "Git",
+      "confidence": 0.8,
+      "sources": [
+        "ats",
+        "resume"
+      ]
+    },
+    {
+      "name": "HTML",
+      "confidence": 0.62,
+      "sources": [
+        "github_profile"
+      ]
+    },
+    {
+      "name": "CSS",
+      "confidence": 0.62,
+      "sources": [
+        "github_profile"
       ]
     },
     {
@@ -95,26 +105,32 @@
   ],
   "experience": [
     {
-      "company": "Acme Corp",
-      "title": "Senior Software Engineer",
-      "start": "2021-01",
+      "company": "IIIT Bhopal",
+      "title": "B.Tech CSE Student (Final Year)",
+      "start": null,
       "end": null,
-      "summary": "Lead backend services and mentoring."
+      "summary": null
     },
     {
-      "company": "Beta Labs",
-      "title": "Software Engineer",
-      "start": "2018-06",
-      "end": "2020-12",
-      "summary": "Built data pipelines."
+      "company": "TechNova Solutions",
+      "title": "Software Engineering Intern",
+      "start": "2025-05",
+      "end": "2025-07",
+      "summary": "Built REST APIs and internal dashboards using Python and React."
     }
   ],
   "education": [
     {
-      "institution": "UC Berkeley",
-      "degree": "BS",
-      "field": "Computer Science",
-      "end_year": 2018
+      "institution": "IIIT Bhopal",
+      "degree": "B.Tech",
+      "field": "Computer Science and Engineering",
+      "end_year": 2026
+    },
+    {
+      "institution": "IIIT Bhopal",
+      "degree": "B.Tech CSE",
+      "field": null,
+      "end_year": null
     }
   ],
   "provenance": [
@@ -186,9 +202,15 @@
     },
     {
       "field": "skills",
-      "source": "github_profile",
-      "method": "github_repos_languages",
-      "confidence": 0.62
+      "source": "ats",
+      "method": "schema_map",
+      "confidence": 0.8
+    },
+    {
+      "field": "skills",
+      "source": "ats",
+      "method": "schema_map",
+      "confidence": 0.8
     },
     {
       "field": "skills",
@@ -225,6 +247,12 @@
       "source": "ats",
       "method": "schema_map",
       "confidence": 0.84
+    },
+    {
+      "field": "education",
+      "source": "resume",
+      "method": "section_parse",
+      "confidence": 0.55
     },
     {
       "field": "links.linkedin",

@@ -1,39 +1,32 @@
 {
-  "candidate_name": "Priya Sharma",
-  "contact_email": "priya.sharma@example.com",
-  "mobile": "415-555-0198",
-  "current_role": "Senior Software Engineer",
+  "candidate_name": "Abhinav Patel",
+  "contact_email": "abhinav.patel@example.com",
+  "mobile": "+919876543210",
+  "current_role": "B.Tech CSE Student | Aspiring Software Engineer",
   "location": {
-    "city": "San Francisco",
-    "region": "CA",
-    "country": "US"
+    "city": "Bhopal",
+    "region": "Madhya Pradesh",
+    "country": "IN"
   },
-  "total_experience_years": 7.5,
-  "skill_tags": ["python", "aws", "kubernetes", "react", "postgresql"],
+  "total_experience_years": 1,
+  "skill_tags": ["python", "java", "javascript", "react", "sql", "django", "git"],
   "work_history": [
     {
-      "employer": "Acme Corp",
-      "role": "Senior Software Engineer",
-      "start_date": "Jan 2021",
-      "end_date": "Present",
-      "description": "Lead backend services and mentoring."
-    },
-    {
-      "employer": "Beta Labs",
-      "role": "Software Engineer",
-      "start_date": "2018-06",
-      "end_date": "2020-12",
-      "description": "Built data pipelines."
+      "employer": "TechNova Solutions",
+      "role": "Software Engineering Intern",
+      "start_date": "May 2025",
+      "end_date": "Jul 2025",
+      "description": "Built REST APIs and internal dashboards using Python and React."
     }
   ],
   "education_history": [
     {
-      "school": "UC Berkeley",
-      "degree": "BS",
-      "major": "Computer Science",
-      "graduation_year": 2018
+      "school": "IIIT Bhopal",
+      "degree": "B.Tech",
+      "major": "Computer Science and Engineering",
+      "graduation_year": 2026
     }
   ],
-  "linkedin_url": "https://linkedin.com/in/priya-sharma-dev",
-  "github_url": "https://github.com/priyadev"
+  "linkedin_url": "https://linkedin.com/in/abhinav-patel-iiit",
+  "github_url": "https://github.com/abhinav3289"
 }

@@ -1,10 +1,10 @@
 {
-  "login": "priyadev",
-  "name": "Priya Sharma",
-  "email": "priya.sharma@example.com",
-  "bio": "Backend engineer | Python, Go, distributed systems",
-  "location": "San Francisco",
-  "html_url": "https://github.com/priyadev",
-  "blog": "https://priyadev.dev",
-  "languages": ["Python", "Go", "TypeScript", "Docker"]
+  "login": "abhinav3289",
+  "name": "Abhinav Patel",
+  "email": "abhinav.patel@example.com",
+  "bio": "B.Tech CSE @ IIIT Bhopal | Python, Java, React | Aspiring SDE",
+  "location": "Bhopal, India",
+  "html_url": "https://github.com/abhinav3289",
+  "blog": "https://abhinavpatel.dev",
+  "languages": ["Python", "Java", "JavaScript", "HTML", "CSS"]
 }

@@ -1,16 +1,17 @@
 {
-  "full_name": "Priya Sharma",
-  "primary_email": "priya.sharma@example.com",
-  "phone": "+14155550198",
+  "full_name": "Abhinav Patel",
+  "primary_email": "abhinav.patel@example.com",
+  "phone": "+919876543210",
   "skills": [
     "Python",
-    "AWS",
-    "Kubernetes",
+    "Java",
+    "JavaScript",
     "React",
-    "PostgreSQL",
-    "Go",
-    "TypeScript",
-    "Docker",
+    "SQL",
+    "Django",
+    "Git",
+    "HTML",
+    "CSS",
     "REST APIs"
   ],
   "overall_confidence": 0.918

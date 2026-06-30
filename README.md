@@ -8,7 +8,8 @@ Production-ready pipeline for the **Eightfold Engineering Intern (Jul–Dec 2026
 | --- | --- |
 | **Live Demo (Web UI)** | https://abhinav3289-eightfold-assignment-candidate-profil-webapp-nghud3.streamlit.app/ |
 | **GitHub Repository** | https://github.com/Abhinav3289/eightfold_assignment_candidate-profile_transformers- |
-| **Design Document** | [`docs/DESIGN.md`](docs/DESIGN.md) → export as `Abhinav_Patel_<YourEmail>_Eightfold.pdf` |
+| **Design Document** | [`docs/DESIGN.md`](docs/DESIGN.md) · **Full PDF source:** [`docs/Abhinav_Patel_Eightfold_Submission.md`](docs/Abhinav_Patel_Eightfold_Submission.md) |
+| **Demo Video Script** | Page 2 of [`docs/Abhinav_Patel_Eightfold_Submission.md`](docs/Abhinav_Patel_Eightfold_Submission.md) · Export guide: [`docs/PDF_EXPORT.md`](docs/PDF_EXPORT.md) |
 | **Submission Guide** | [`docs/SUBMISSION.md`](docs/SUBMISSION.md) |
 | **Sample Outputs** | [`output/default_profile.json`](output/default_profile.json), [`output/custom_profile.json`](output/custom_profile.json) |
 | **Demo Video** | _Add your link in README and `docs/SUBMISSION.md`_ |

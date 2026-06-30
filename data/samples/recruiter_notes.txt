@@ -1,4 +1,4 @@
-Candidate: Priya Sharma (priya.sharma@example.com)
-Strong Python/AWS engineer. 7+ years experience.
-LinkedIn: https://linkedin.com/in/priya-sharma-dev
-Notes: Excellent communicator, open to remote roles.
+Candidate: Abhinav Patel (abhinav.patel@example.com)
+Promising fresher from IIIT Bhopal. Strong Python and DSA fundamentals. 1 internship completed.
+LinkedIn: https://linkedin.com/in/abhinav-patel-iiit
+Notes: Good communicator, open to full-time SDE roles across India.

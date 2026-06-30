@@ -67,12 +67,12 @@ def test_merge_prefers_structured_over_unstructured():
 def test_custom_projection():
     profile = CanonicalProfile(
         candidate_id="cand_test",
-        full_name="Priya Sharma",
-        emails=["priya.sharma@example.com"],
-        phones=["+14155550198"],
+        full_name="Abhinav Patel",
+        emails=["abhinav.patel@example.com"],
+        phones=["+919876543210"],
         skills=[
             {"name": "Python", "confidence": 0.8, "sources": ["ats"]},
-            {"name": "AWS", "confidence": 0.7, "sources": ["ats"]},
+            {"name": "Java", "confidence": 0.7, "sources": ["ats"]},
         ],
         overall_confidence=0.82,
     )
@@ -87,8 +87,8 @@ def test_custom_projection():
         on_missing="null",
     )
     projected = project_profile(profile, config)
-    assert projected["primary_email"] == "priya.sharma@example.com"
-    assert projected["phone"] == "+14155550198"
+    assert projected["primary_email"] == "abhinav.patel@example.com"
+    assert projected["phone"] == "+919876543210"
     assert "Python" in projected["skills"]
 
 
@@ -114,9 +114,9 @@ def test_end_to_end_pipeline():
             SAMPLES / "recruiter_notes.txt",
         ]
     )
-    assert result["full_name"] == "Priya Sharma"
-    assert result["emails"][0] == "priya.sharma@example.com"
-    assert result["phones"][0] == "+14155550198"
+    assert result["full_name"] == "Abhinav Patel"
+    assert result["emails"][0] == "abhinav.patel@example.com"
+    assert result["phones"][0] == "+919876543210"
     assert result["overall_confidence"] > 0
     assert len(result["skills"]) >= 3
     assert len(result["provenance"]) > 0

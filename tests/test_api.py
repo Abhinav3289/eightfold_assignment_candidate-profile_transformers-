@@ -24,7 +24,7 @@ def test_transform_samples_default():
     assert response.status_code == 200
     body = response.json()
     assert body["success"] is True
-    assert body["data"]["full_name"] == "Priya Sharma"
+    assert body["data"]["full_name"] == "Abhinav Patel"
     assert body["data"]["overall_confidence"] > 0
 
 
@@ -51,7 +51,7 @@ def test_transform_upload():
         )
     assert response.status_code == 200
     body = response.json()
-    assert body["data"]["full_name"] == "Priya Sharma"
+    assert body["data"]["full_name"] == "Abhinav Patel"
 
 
 def test_config_example():
