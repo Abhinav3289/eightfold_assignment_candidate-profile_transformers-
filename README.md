@@ -3,7 +3,8 @@
 Ingests candidate data from multiple structured and unstructured sources, merges them into a canonical profile with provenance and confidence, and projects the result to a runtime-configurable output schema.
 
 **Author:** Abhinav Patel · IIIT Bhopal  
-**Live demo:** https://abhinav3289-eightfold-assignment-candidate-profil-webapp-nghud3.streamlit.app/
+**Live demo:** https://abhinav3289-eightfold-assignment-candidate-profil-webapp-nghud3.streamlit.app/  
+**Demo video:** https://drive.google.com/file/d/1JS8tHBY1qeoK1qqsJlR7GcSrVzkdQjoG/view?usp=sharing
 
 ---
 
@@ -147,16 +148,159 @@ Example config: [`config/custom_output.json`](config/custom_output.json)
 
 ### Technical design document
 
-[`docs/Abhinav_Patel_Eightfold_Design_Only.pdf`](docs/Abhinav_Patel_Eightfold_Design_Only.pdf)
+[`docs/Abhinav_Patel_Eightfold.pdf`](docs/Abhinav_Patel_Eightfold.pdf) — includes HLD and pipeline flow diagrams.  
+[`docs/Abhinav_Patel_Eightfold.docx`](docs/Abhinav_Patel_Eightfold.docx) — same content in Word format for submission.
+
+**Demo video script (~2 min, PDF):** [`docs/Abhinav_Patel_Demo_Video_Script.pdf`](docs/Abhinav_Patel_Demo_Video_Script.pdf)  
+**Demo walkthrough video:** https://drive.google.com/file/d/1JS8tHBY1qeoK1qqsJlR7GcSrVzkdQjoG/view?usp=sharing
+
+Regenerate PDF: `pip install -r docs/requirements-pdf.txt && python docs/generate_pdf.py`  
+Regenerate DOCX: `python docs/generate_docx.py`
 
 ---
 
-## Sample Output
+## Sample Demo: Input & Output
 
-| Output | File |
-| --- | --- |
-| Default canonical profile | [`output/default_profile.json`](output/default_profile.json) |
-| Custom projection | [`output/custom_profile.json`](output/custom_profile.json) |
+The bundled sample models **Abhinav Patel** — B.Tech CSE (final year) at IIIT Bhopal, with an internship at TechNova Solutions, Bhopal, India. Run with **Use sample data** in the web UI, or pass the files below via CLI.
+
+### Input sources
+
+| Source | File | Type |
+| --- | --- | --- |
+| Recruiter export | [`data/samples/recruiter.csv`](data/samples/recruiter.csv) | Structured CSV |
+| ATS record | [`data/samples/ats.json`](data/samples/ats.json) | Structured JSON |
+| GitHub profile | [`data/samples/github_profile.json`](data/samples/github_profile.json) | Unstructured JSON |
+| Resume | [`data/samples/resume.txt`](data/samples/resume.txt) | Unstructured text |
+| Recruiter notes | [`data/samples/recruiter_notes.txt`](data/samples/recruiter_notes.txt) | Free-form text |
+
+**Recruiter CSV** (`data/samples/recruiter.csv`):
+
+```csv
+name,email,phone,current_company,title,location
+Abhinav Patel,abhinav.patel@example.com,+91 98765 43210,IIIT Bhopal,B.Tech CSE Student (Final Year),"Bhopal, Madhya Pradesh, IN"
+```
+
+**ATS JSON** (excerpt from `data/samples/ats.json`):
+
+```json
+{
+  "candidate_name": "Abhinav Patel",
+  "contact_email": "abhinav.patel@example.com",
+  "mobile": "+919876543210",
+  "skill_tags": ["python", "java", "javascript", "react", "sql", "django", "git"],
+  "work_history": [
+    {
+      "employer": "TechNova Solutions",
+      "role": "Software Engineering Intern",
+      "start_date": "May 2025",
+      "end_date": "Jul 2025"
+    }
+  ],
+  "education_history": [
+    {
+      "school": "IIIT Bhopal",
+      "degree": "B.Tech",
+      "major": "Computer Science and Engineering",
+      "graduation_year": 2026
+    }
+  ]
+}
+```
+
+**GitHub profile** (excerpt from `data/samples/github_profile.json`):
+
+```json
+{
+  "login": "abhinav3289",
+  "name": "Abhinav Patel",
+  "bio": "B.Tech CSE @ IIIT Bhopal | Python, Java, React | Aspiring SDE",
+  "languages": ["Python", "Java", "JavaScript", "HTML", "CSS"]
+}
+```
+
+**Resume** (excerpt from `data/samples/resume.txt`):
+
+```text
+Abhinav Patel
+abhinav.patel@example.com | +91-9876543210 | Bhopal, Madhya Pradesh, India
+
+Skills: Python, Java, JavaScript, React, SQL, Django, Git, REST APIs
+
+Experience: Software Engineering Intern - TechNova Solutions (May 2025 - Jul 2025)
+Education: B.Tech CSE - IIIT Bhopal (2026)
+```
+
+**Recruiter notes** (`data/samples/recruiter_notes.txt`):
+
+```text
+Candidate: Abhinav Patel (abhinav.patel@example.com)
+Promising fresher from IIIT Bhopal. Strong Python and DSA fundamentals. 1 internship completed.
+Notes: Good communicator, open to full-time SDE roles across India.
+```
+
+### Default canonical output
+
+Pipeline merges all five sources into one profile with provenance and confidence. Full output: [`output/default_profile.json`](output/default_profile.json).
+
+```json
+{
+  "candidate_id": "cand_5034ad715b57",
+  "full_name": "Abhinav Patel",
+  "emails": ["abhinav.patel@example.com"],
+  "phones": ["+919876543210"],
+  "location": {
+    "city": "Bhopal",
+    "region": "Madhya Pradesh",
+    "country": "IN"
+  },
+  "headline": "B.Tech CSE Student (Final Year)",
+  "years_experience": 1.0,
+  "skills": [
+    { "name": "Python", "confidence": 0.8, "sources": ["ats", "github_profile", "resume", "recruiter_notes"] },
+    { "name": "Java", "confidence": 0.8, "sources": ["ats", "github_profile", "resume"] },
+    { "name": "React", "confidence": 0.8, "sources": ["ats", "resume"] }
+  ],
+  "experience": [
+    {
+      "company": "TechNova Solutions",
+      "title": "Software Engineering Intern",
+      "start": "2025-05",
+      "end": "2025-07",
+      "summary": "Built REST APIs and internal dashboards using Python and React."
+    }
+  ],
+  "education": [
+    {
+      "institution": "IIIT Bhopal",
+      "degree": "B.Tech",
+      "field": "Computer Science and Engineering",
+      "end_year": 2026
+    }
+  ],
+  "overall_confidence": 0.918
+}
+```
+
+Key normalizations applied: phone `+91 98765 43210` → `+919876543210` (E.164), dates `May 2025` → `2025-05`, skills `python`/`py` → `Python`. Every field includes full provenance in the complete JSON file.
+
+### Custom projection output
+
+Same canonical record, projected with [`config/custom_output.json`](config/custom_output.json). Full output: [`output/custom_profile.json`](output/custom_profile.json).
+
+```json
+{
+  "full_name": "Abhinav Patel",
+  "primary_email": "abhinav.patel@example.com",
+  "phone": "+919876543210",
+  "skills": [
+    "Python", "Java", "JavaScript", "React", "SQL",
+    "Django", "Git", "HTML", "CSS", "REST APIs"
+  ],
+  "overall_confidence": 0.918
+}
+```
+
+`overall_confidence` stays **0.918** in both outputs because it is computed on the full merged profile before projection.
 
 ---
 

@@ -11,6 +11,7 @@ venv/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+docs/_diagram_assets/
 output/*
 !output/.gitkeep
 !output/default_profile.json
